@@ -32,13 +32,13 @@ def register_user(user: auth_schemas.UserCreate, session: Session = Depends(get_
 
     if not user.email or not user.password:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, 
+            status_code=400, 
             detail="Email and Password cannot be Null.")
 
     existing_email = session.query(db_models.Email).filter_by(email=user.email).first()
     if existing_email:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=400,
             detail="Email already registered.")
     emp_id = generate_emp_id(session)
 
@@ -97,7 +97,7 @@ def getusers(limit: int=10, skip: int=0, dependencies=Depends(JWTBearer()), sess
             detail=f"Database error occurred: {str(e)}")
 
 def change_password(request: auth_schemas.ChangePassword, db: Session = Depends(get_session)): ##&& Add error when user doesn't password or new password.
-    user = db.query(db_models.User).filter(db_models.User.emails == request.emails).first()
+    user = db.query(db_models.User).join(db_models.Email).filter(db_models.Email.email.contains(request.email)).first()
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, 
