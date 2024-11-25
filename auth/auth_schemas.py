@@ -8,7 +8,7 @@ class UserCreate(BaseModel):
     email: EmailStr
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    emails: EmailStr
     password: str
 
 class ChangePassword(BaseModel):
@@ -17,7 +17,7 @@ class ChangePassword(BaseModel):
     new_password: str
 
 class TokenCreate(BaseModel):
-    user_id: str
+    employment_id: str
     access_token: str
     refresh_tkeon: str
     status: bool

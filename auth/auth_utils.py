@@ -50,8 +50,8 @@ def token_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         payload = jwt.decode(kwargs['dependencies'], JWT_SECRET_KEY, ALGORITHM)
-        user_id = payload['sub']
-        data = kwargs['session'].query(auth_models.RefreshToken).filter_by(user_id=user_id, access_token=kwargs['dependencies'], status=True).first()
+        employment_id = payload['sub']
+        data = kwargs['session'].query(auth_models.RefreshToken).filter_by(employment_id=employment_id, access_token=kwargs['dependencies'], status=True).first()
         if data: 
             return func(kwargs['dependencies'], kwargs['session'])
         else:

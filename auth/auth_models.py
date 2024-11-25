@@ -9,7 +9,7 @@ from db.db_models import User
 class RefreshToken(Base):
     __tablename__ = "refresh_token"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey(User.id))
+    employment_id = Column(Integer, ForeignKey(User.id))
     access_token = Column(String(450), nullable=False)
     refresh_token = Column(String(450), nullable=False)
     status = Column(Boolean)
